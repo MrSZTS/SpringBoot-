@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hqyj.SpringBootDemo.modules.test.vo.ApplicationTest;
 
 @Controller
+@RequestMapping("/test")
 public class TestController {
 		
 	@Value("${server.port}")
@@ -32,7 +33,7 @@ public class TestController {
 	 * 127.0.0.1:8080/test/log
 	 * @return
 	 */
-	@RequestMapping("/test/log")
+	@RequestMapping("/log")
 	@ResponseBody
 	public String logTest() {
 		//level: TRACE<DEBUG<INFO<WARN<ERROR
@@ -48,7 +49,7 @@ public class TestController {
 	 * 127.0.0.1:8080/test/config
 	 * @return
 	 */
-	@RequestMapping("/test/config")
+	@RequestMapping("/config")
 	@ResponseBody
 	public String configInfo() {
 		StringBuffer sb = new StringBuffer();
@@ -70,7 +71,7 @@ public class TestController {
 	 * 127.0.0.1:8080/test/desc
 	 * @return
 	 */
-	@RequestMapping("/test/desc")	
+	@RequestMapping("/desc")	
 	@ResponseBody
 	//返回的是一个接口，而不是一个页面控制器
 	public String testDesc() {
