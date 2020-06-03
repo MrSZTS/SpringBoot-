@@ -1,5 +1,7 @@
 package com.hqyj.SpringBootDemo.modules.test.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,7 @@ import com.hqyj.SpringBootDemo.modules.test.vo.ApplicationTest;
 
 @Controller
 public class TestController {
-	
+		
 	@Value("${server.port}")
 	private int port;
 	@Value("${com.thornBird.name}")
@@ -24,6 +26,23 @@ public class TestController {
 	
 	@Autowired
 	private ApplicationTest applicationTest;
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger(TestController.class);
+	/**
+	 * 127.0.0.1:8080/test/log
+	 * @return
+	 */
+	@RequestMapping("/test/log")
+	@ResponseBody
+	public String logTest() {		
+		//level: TRACE<DEBUG<INFO<WARN<ERROR
+		LOGGER.trace("This is TRACE log");
+		LOGGER.debug("This is DEBUG log");
+		LOGGER.info("This is INFO log");
+		LOGGER.warn("This is WARN log");
+		LOGGER.error("This is ERROR log");
+		return "This is log test";
+	}
 	
 	/**
 	 * 127.0.0.1:8080/test/config
