@@ -34,7 +34,7 @@ public class TestController {
 	 */
 	@RequestMapping("/test/log")
 	@ResponseBody
-	public String logTest() {		
+	public String logTest() {
 		//level: TRACE<DEBUG<INFO<WARN<ERROR
 		LOGGER.trace("This is TRACE log");
 		LOGGER.debug("This is DEBUG log");
