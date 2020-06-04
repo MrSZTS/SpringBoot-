@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.PageInfo;
 import com.hqyj.SpringBootDemo.modules.test.entity.City;
 import com.hqyj.SpringBootDemo.modules.test.service.CityService;
 
@@ -36,6 +37,19 @@ public class CityController {
 	@RequestMapping("/city")
 	public City getCityByName(@RequestParam String cityName,@RequestParam(required = false) String localCityName) {
 		return cityService.getCityByName(cityName, localCityName);
+	}
+	
+	/**
+	 * 127.0.0.1/api/cities?currentPage=1&pageSize=5&countryId=522
+	 * @param currentPage
+	 * @param pageSize
+	 * @param countryId
+	 * @return
+	 */
+	@RequestMapping("/cities")
+	public PageInfo<City> getCitiesPage(@RequestParam int currentPage,@RequestParam  int pageSize,
+											@RequestParam  int countryId) {
+		return cityService.getCitiesPage(currentPage, pageSize, countryId);
 	}
 	
 }
