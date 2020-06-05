@@ -17,12 +17,17 @@ import com.hqyj.SpringBootDemo.modules.common.vo.SearchVo;
 import com.hqyj.SpringBootDemo.modules.test.dao.CityDao;
 import com.hqyj.SpringBootDemo.modules.test.entity.City;
 import com.hqyj.SpringBootDemo.modules.test.service.CityService;
+import com.hqyj.SpringBootDemo.utils.RedisUtils;
 
 @Service
 public class CityServiceImpl implements CityService {
 	
 	@Autowired
 	private CityDao cityDao;
+	
+	//redisUtils被注册为组件，并且将配置类中的redisTemplate注入进来了
+	@Autowired
+	private RedisUtils redisUtils;
 	
 	@Override
 	public List<City> getCitiesByCountryId(int countryId) {
@@ -78,6 +83,13 @@ public class CityServiceImpl implements CityService {
 	public Result<Object> deleteCity(int cityId) {
 		cityDao.deleteCity(cityId);
 		return new Result<Object>(ResultStatus.SUCCESS.status,"delete success");
+	}
+
+	@Override
+	public Object migrateCitiesByCounteryId(int countryId) {
+		List<City> cities = getCitiesByCountryId(countryId);
+		redisUtils.set("cities", cities);		
+		return redisUtils.get("cities");
 	}
 
 	
