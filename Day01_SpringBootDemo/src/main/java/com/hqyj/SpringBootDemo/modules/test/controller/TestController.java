@@ -123,7 +123,8 @@ public class TestController {
 		modelMap.addAttribute("updateCityUri","/api/city");
 		
 		
-		modelMap.addAttribute("template","test/index");
+		//modelMap.addAttribute("template","test/index");
+		
 		return "index";//indexSimple
 	}
 	
