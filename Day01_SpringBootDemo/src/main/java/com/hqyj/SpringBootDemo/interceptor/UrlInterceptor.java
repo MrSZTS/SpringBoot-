@@ -1,5 +1,7 @@
 package com.hqyj.SpringBootDemo.interceptor;
-
+/*
+ * 拦截器配置类
+ */
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
