@@ -11,6 +11,8 @@ public class ResourceConfigBean {
 	
 	@Value("${spring.source.path}")
 	private String resourcePath;
+	@Value("${spring.source.path.pattern}")
+	private String resourcePathPattern; 
 	@Value("${spring.source.folder.windows}")
 	private String localPathForWindows;
 	@Value("${spring.source.folder.linux}")
@@ -22,6 +24,12 @@ public class ResourceConfigBean {
 	}
 	public void setResourcePath(String resourcePath) {
 		this.resourcePath = resourcePath;
+	}
+	public String getResourcePathPattern() {
+		return resourcePathPattern;
+	}
+	public void setResourcePathPattern(String resourcePathPattern) {
+		this.resourcePathPattern = resourcePathPattern;
 	}
 	public String getLocalPathForWindows() {
 		return localPathForWindows;
@@ -35,7 +43,7 @@ public class ResourceConfigBean {
 	public void setLocalPathForLinux(String localPathForLinux) {
 		this.localPathForLinux = localPathForLinux;
 	}
-	
+
 	
 	
 }
