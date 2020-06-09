@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.hqyj.SpringBootDemo.filter.ParameterFilter;
@@ -24,9 +25,11 @@ public class WebMvcConfig implements WebMvcConfigurer{
 
 	@Value("${server.http.port}")
 	private int httpPort;
-	
+		
 	@Autowired
 	private UrlInterceptor urlInterceptor;
+	@Autowired
+	private ResourceConfigBean resourceConfigBean;
 	
 	@Bean
 	public Connector connector() {
@@ -57,6 +60,23 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry registry) {		
 		registry.addInterceptor(urlInterceptor).addPathPatterns("/**");
 				
+	}
+
+	//添加静态资源控制器（加入本地资源文件夹）
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		//本地使用**资源文件夹，实际去**路径寻找文件夹。	必须要加file：  代表是本地的		**表示该资源下的所有
+		//registry.addResourceHandler("/wenjianUpload/**").addResourceLocations("file:D:/wenjianUpload/");
+		
+		String systemName = System.getProperty("os.name");
+		if (systemName.toLowerCase().startsWith("win")) {
+			registry.addResourceHandler(resourceConfigBean.getResourcePath())
+						.addResourceLocations("file:" + resourceConfigBean.getLocalPathForWindows());
+		}else {
+			registry.addResourceHandler(resourceConfigBean.getResourcePath())
+						.addResourceLocations("file:" + resourceConfigBean.getLocalPathForLinux());
+		}
+		
 	}
 	
 	

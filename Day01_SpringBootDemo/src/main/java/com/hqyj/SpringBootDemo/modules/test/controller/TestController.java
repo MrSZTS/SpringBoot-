@@ -122,8 +122,10 @@ public class TestController {
 		modelMap.addAttribute("changeType","checkbox");
 		modelMap.addAttribute("baiduUrl","/test/log");
 		modelMap.addAttribute("city",cities.get(0));
+//		modelMap.addAttribute("shopLogo",
+//				"https://static.veer.com/veer/static/resources/keyword/2020-02-19/533ed30de651499da1c463bca44b6d60.jpg");
 		modelMap.addAttribute("shopLogo",
-				"https://static.veer.com/veer/static/resources/keyword/2020-02-19/533ed30de651499da1c463bca44b6d60.jpg");
+				"/wenjianUpload/qe.png");
 		modelMap.addAttribute("country",country);
 		modelMap.addAttribute("cities",cities);
 		modelMap.addAttribute("updateCityUri","/api/city");
@@ -149,10 +151,15 @@ public class TestController {
 			return "redirect:/test/index";
 		}
 
+		String resourcePath = "/wenjianUpload/" + file.getOriginalFilename();
+		String destFilePath = "D:" + resourcePath;		
+		//定义文件上传后在电脑中放置的路径
+		//getOriginalFilename()		获取文件的原始名
+		//String destFilePath = "D:\\wenjianUpload\\" + file.getOriginalFilename();
+		//String destFilePath = "/wenjianUpload" + File.separator + file.getOriginalFilename();
+		
 		try {
-			//定义文件上传后在电脑中放置的路径
-			//getOriginalFilename()		获取文件的原始名
-			String destFilePath = "D:\\wenjianUpload\\" + file.getOriginalFilename();
+
 			//目标file
 			File destFile = new File(destFilePath);
 			//@RequestParam MultipartFile file
@@ -168,6 +175,7 @@ public class TestController {
 		//return "index";
 		
 		redirectAttributes.addFlashAttribute("message","Upload success.");
+		redirectAttributes.addFlashAttribute("resourcePath",resourcePath);
 		
 		return "redirect:/test/index";
 	}
