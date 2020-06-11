@@ -29,6 +29,13 @@ public class UserController {
 		return userService.insertCity(user);
 	}
 	
+	@PostMapping(value = "/login",consumes = "application/json")
+	public Result<User> LoginAuthenticator(@RequestBody User user){
+		return userService.login(user);
+	}
+	
+	
+	
 	/**
 	 * 127.0.0.1/account/user	---------put
 	 */

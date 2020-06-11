@@ -41,6 +41,20 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public Result<User> login(User user) {
+		User userTemp = userDao.getUserByUserName(user.getUserName());
+		if(userTemp == null || !userTemp.getPassword().equals(MD5Util.getMD5(user.getPassword()))) {
+			return new Result<User>(ResultStatus.FAILD.status,"username or password error.");
+		}
+		return new Result<User>(ResultStatus.SUCCESS.status,"login success.",userTemp);
+	}
+	
+	
+	
+	
+	
+	
+	@Override
 	public Result<User> updateUser(User user) {
 		userDao.updateUser(user);
 		return new Result<User>(ResultStatus.SUCCESS.status,"update success",user);
@@ -51,6 +65,8 @@ public class UserServiceImpl implements UserService{
 		userDao.deleteUser(userId);
 		return new Result<Object>(ResultStatus.SUCCESS.status,"delete success");
 	}
+
+
 
 
 
