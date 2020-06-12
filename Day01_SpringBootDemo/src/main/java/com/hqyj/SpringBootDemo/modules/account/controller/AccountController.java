@@ -23,4 +23,12 @@ public class AccountController {
 		return "indexSimple";
 	}
 	
+	/**
+	 * http://127.0.0.1/account/users
+	 */
+	@RequestMapping("/users")
+	public String usersPage() {
+		return "index";
+	}
+	
 }
