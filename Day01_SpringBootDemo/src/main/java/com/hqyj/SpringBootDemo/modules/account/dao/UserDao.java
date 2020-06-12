@@ -1,5 +1,7 @@
 package com.hqyj.SpringBootDemo.modules.account.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -8,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.hqyj.SpringBootDemo.modules.account.entity.User;
+import com.hqyj.SpringBootDemo.modules.common.vo.SearchVo;
 
 @Mapper
 public interface UserDao {
@@ -21,6 +24,25 @@ public interface UserDao {
 	//查询用户是否存在
 	@Select("select * from user where user_name = #{userName}")
 	User getUserByUserName(String userName);
+	
+	//多条件查询
+	@Select("<script>" + 
+			"select * from user "
+			+ "<where> "
+			+ "<if test='keyWord != \"\" and keyWord != null'>"
+			+ " and (user_name like '%${keyWord}%') "
+			+ "</if>"
+			+ "</where>"
+			+ "<choose>"
+			+ "<when test='orderBy != \"\" and orderBy != null'>"
+			+ " order by ${orderBy} ${sort}"
+			+ "</when>"
+			+ "<otherwise>"
+			+ " order by user_id desc"
+			+ "</otherwise>"
+			+ "</choose>"
+			+ "</script>")
+	List<User> getCitiesBySearchVo(SearchVo serarchVo);
 	
 	@Update("update user set user_name = #{userName} where user_id = #{userId}")
 	void updateUser(User user);
