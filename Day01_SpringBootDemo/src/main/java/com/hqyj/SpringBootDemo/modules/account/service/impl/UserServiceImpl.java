@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService{
 	public Result<User> login(User user) {
 		User userTemp = userDao.getUserByUserName(user.getUserName());
 		if(userTemp == null || !userTemp.getPassword().equals(MD5Util.getMD5(user.getPassword()))) {
-			return new Result<User>(ResultStatus.FAILD.status,"username or password error.");
+			return new Result<User>(ResultStatus.FAILED.status,"username or password error.");
 		}
 		return new Result<User>(ResultStatus.SUCCESS.status,"login success.",userTemp);
 	}
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService{
 	public Result<User> editUser(User user) {
 		User userTemp = getUserByUserName(user.getUserName());
 		if(userTemp != null && userTemp.getUserId() != user.getUserId()) {
-			return new Result<User>(ResultStatus.FAILD.status,"User name is repeat");
+			return new Result<User>(ResultStatus.FAILED.status,"User name is repeat");
 		}
 		
 		if(user.getUserId() > 0) {
