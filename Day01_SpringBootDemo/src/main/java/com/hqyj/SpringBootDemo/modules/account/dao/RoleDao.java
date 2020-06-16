@@ -25,6 +25,11 @@ public interface RoleDao {
 	@Select("select * from role")
 	List<Role> getRoles();
 	
+	//通过userId查询出userId的所有角色
+	@Select("select * from role role left join user_role userRole "
+			+ "on role.role_id = userRole.role_id where userRole.user_id = #{userId}")
+	List<Role> getRolesByUserId(int userId);
+	
 	//删
 	
 	

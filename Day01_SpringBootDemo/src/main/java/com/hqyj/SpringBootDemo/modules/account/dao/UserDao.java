@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -44,10 +47,23 @@ public interface UserDao {
 			+ "</script>")
 	List<User> getCitiesBySearchVo(SearchVo serarchVo);
 	
+	@Select("select * from user where user_id = #{userId}")
+	@Results(id = "userResult",value = {
+			@Result(column = "user_id",property = "userId"),
+			@Result(column = "user_id",property = "roles",
+					javaType = List.class,
+					many = @Many(select="com.hqyj.SpringBootDemo.modules.account.dao."
+							+ "RoleDao.getRolesByUserId"))
+	})
+	User getUserByUserId(int userId);
+	
+	//修改
 	@Update("update user set user_name = #{userName} where user_id = #{userId}")
 	void updateUser(User user);
 	
+	//删除
 	@Delete("delete from user where user_id = #{userId}")
 	void deleteUser(int userId);
+	
 	
 }

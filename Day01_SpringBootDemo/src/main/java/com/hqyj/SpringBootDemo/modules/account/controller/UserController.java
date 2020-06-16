@@ -2,7 +2,6 @@ package com.hqyj.SpringBootDemo.modules.account.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,7 +27,8 @@ public class UserController {
 	 */
 	@PostMapping(value = "/user",consumes = "application/json")
 	public Result<User> insertCity(@RequestBody User user) {
-		return userService.insertCity(user);
+		//return userService.insertCity(user);
+		return userService.editUser(user);
 	}
 	
 	/**
@@ -47,18 +47,28 @@ public class UserController {
 		return userService.getCitiesBySearchVo(serarchVo);
 	}
 	
-	
-	
+	/**
+	 * 127.0.0.1/account/user/3 	---------get
+	 */
+	@RequestMapping("/user/{userId}")
+	public User getUserByUserId(@PathVariable int userId) {
+		return userService.getUserByUserId(userId);
+	}
+		
 	/**
 	 * 127.0.0.1/account/user	---------put
 	 */
-	@PutMapping(value = "/user",consumes = "application/x-www-form-urlencoded")
-	public Result<User> updateUser(@ModelAttribute User user) {
-		return userService.updateUser(user);
+	//consumes 指定数据类型		consumes = "application/x-www-form-urlencoded"	@ModelAttribute
+	@PutMapping(value = "/user",consumes = "application/json") 
+	public Result<User> updateUser(@RequestBody User user) {
+		//return userService.updateUser(user); 
+		return userService.editUser(user); 
 	}
+	 
+
 	
 	/**
-	 * 127.0.0.1/account/user/1
+	 * 127.0.0.1/account/user/8
 	 */
 	@DeleteMapping(value = "/user/{userId}")
 	public Result<Object> deleteUser(@PathVariable int userId) {

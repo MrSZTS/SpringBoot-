@@ -7,7 +7,7 @@ import com.hqyj.SpringBootDemo.modules.common.vo.SearchVo;
 
 public interface UserService {
 
-	Result<User> insertCity(User user);
+	//Result<User> insertCity(User user);
 	
 	User getUserByUserName(String userName);
 	
@@ -15,8 +15,12 @@ public interface UserService {
 	
 	PageInfo<User> getCitiesBySearchVo(SearchVo serarchVo);
 	
-	Result<User> updateUser(User user);
+	User getUserByUserId(int userId);
+	
+	//Result<User> updateUser(User user);
 	
 	Result<Object> deleteUser(int userId);
+	
+	Result<User> editUser(User user);
 	
 }

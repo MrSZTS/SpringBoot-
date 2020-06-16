@@ -134,6 +134,8 @@
 <!-- replace到account下的userAdd页面，并且碎片的id指定为userAdd （碎片id	th:fragment="userAdd"） -->
 <div th:replace="account/userAdd :: userAdd"></div>
 
+<div th:replace="account/userEdit :: userEdit"></div>
+
 <!-- jquery.dataTables -->
 <script
 	th:src="${'/vendors/datatables.net/js/jquery.dataTables.min.js'}"
@@ -188,6 +190,7 @@
 <script type="text/javascript">
 var DEFAULT_PAGE_SIZE = 5;
 
+//加载页面时，需要执行的 js 代码
 $(document).ready(function(){
 	initTable(DEFAULT_PAGE_SIZE);
 	
@@ -199,7 +202,97 @@ $(document).ready(function(){
 		insertUser();
 	});
 	
+	$("#userEditBtn").bind("click",function(){
+		updateUser();
+	});
+	
 });
+
+//初始化编辑页面
+function initEditModal(userId) {
+	//初始化roles，传进去外层div的id和里面每个checkbox的name名称
+	initRoles("rolesForEditPage", "roleForEditPage");
+	
+	$.ajax({
+		url : "/account/user/" + userId,
+		type : "get",
+		contentType: "application/json",
+		success : function (rs) {
+			//通过jQuery的id选择器，将查询到的user对象的属性渲染到编辑模态框中
+			$("#userIdForEditPage").val(rs.userId);
+			$("#userNameForEditPage").val(rs.userName);
+			//用jQuery的each循环，把当前模态框的所有checkbox拿到，如果它的value值等于返还的roles，设置它的属性checked等于checked
+			$.each(rs.roles, function(i, item){
+				$("input[name='roleForEditPage'][value=" + item.roleId + "]")
+					.attr("checked","checked");
+			});
+		},
+		error : function (data) {
+			layer.alert(data.responseText, {icon: 0});
+		}
+	});
+}
+
+//删除用户
+function deleteUser(userId) {
+	bootbox.confirm("Are you sure?", function(result) {
+		if(result) {
+			$.ajax({
+				url : "/account/user/" + userId,
+				type : "delete",
+				contentType: "application/json",
+				success : function (data) {
+					if (data.status == 200) {
+						initTable(DEFAULT_PAGE_SIZE);
+					} else {
+						layer.msg(data.message, {icon: 0});
+					}
+				},
+				error : function (data) {
+					layer.msg(data.responseText, {icon: 0});
+				}
+			});
+		}
+	});
+}
+
+//修改user
+function updateUser() {
+	var user = {};
+	user.userName = $("#userNameForEditPage").val();
+	user.userId = $("#userIdForEditPage").val();
+	var roles = new Array();
+	//将每个checkbox的name值拿过来，做遍历，检查是否选中（checked）
+	$.each($("input[name='roleForEditPage']"), function(){
+		if(this.checked){
+			var role = {};
+			//将roleId给role对象
+			role.roleId = $(this).val();
+			//将role对象放到array里面
+			roles.push(role);
+		}
+	});
+	//将array对象放到user里面，user对象就有了role的信息了，user就包含了在页面上重新设置的角色
+	user.roles = roles;
+	
+	$.ajax({
+		url : "/account/user",
+		type : "put",
+		contentType: "application/json",
+		data : JSON.stringify(user),
+		success : function (data) {
+			if (data.status == 200) {
+				initTable(DEFAULT_PAGE_SIZE);
+			} else {
+				//弹出错误信息
+				layer.msg(data.message, {icon: 0});
+			}
+		},
+		error : function (data) {
+			layer.msg(data.responseText, {icon: 0});
+		}
+	});
+}
 
 //添加user
 function insertUser() {
@@ -352,9 +445,9 @@ function insertUser() {
 		this.creatDate = creatDate;
 		//data-toggle='modal'和data-target='#roleEditModal'是模态框
 		this.operate = function(){
-			return "<a href='#' class='btn-editcolor'  " +
+			return "<a href='#' class='btn-editcolor' data-toggle='modal' data-target='#userEditModal' " +
 				" onclick='initEditModal(\""+ userId +"\")'>编辑</a>&nbsp;" +
-				"<a href='javascript:void(0);' onclick='deleteRole(\""+ userId +"\")' class='btn_editcolor'>删除</a>";
+				"<a href='javascript:void(0);' onclick='deleteUser(\""+ userId +"\")' class='btn_editcolor'>删除</a>";
 		}
 	}
 	
