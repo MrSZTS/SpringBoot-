@@ -16,7 +16,7 @@ import com.hqyj.SpringBootDemo.modules.common.vo.Result;
 import com.hqyj.SpringBootDemo.modules.common.vo.SearchVo;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/api")
 public class UserController {
 
 	@Autowired

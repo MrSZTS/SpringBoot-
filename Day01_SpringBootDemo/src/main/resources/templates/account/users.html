@@ -188,7 +188,7 @@
  -->
 
 <script type="text/javascript">
-var DEFAULT_PAGE_SIZE = 5;
+
 
 //加载页面时，需要执行的 js 代码
 $(document).ready(function(){
@@ -214,7 +214,7 @@ function initEditModal(userId) {
 	initRoles("rolesForEditPage", "roleForEditPage");
 	
 	$.ajax({
-		url : "/account/user/" + userId,
+		url : "/api/user/" + userId,
 		type : "get",
 		contentType: "application/json",
 		success : function (rs) {
@@ -238,7 +238,7 @@ function deleteUser(userId) {
 	bootbox.confirm("Are you sure?", function(result) {
 		if(result) {
 			$.ajax({
-				url : "/account/user/" + userId,
+				url : "/api/user/" + userId,
 				type : "delete",
 				contentType: "application/json",
 				success : function (data) {
@@ -276,7 +276,7 @@ function updateUser() {
 	user.roles = roles;
 	
 	$.ajax({
-		url : "/account/user",
+		url : "/api/user",
 		type : "put",
 		contentType: "application/json",
 		data : JSON.stringify(user),
@@ -314,7 +314,7 @@ function insertUser() {
 	user.roles = roles;
 	
 	$.ajax({
-		url : "/account/user",
+		url : "/api/user",
 		type : "post",
 		contentType: "application/json",
 		data : JSON.stringify(user),
@@ -337,25 +337,7 @@ function insertUser() {
 		initRoles("rolesForAddPage","roleForAddPage");
 	}
 	
-	function initRoles(rolesDiv, roleName) {
-		$("#" + rolesDiv + "").empty();
-		$.ajax({
-			url : "/account/roles",
-			type : "get",
-			contentType: "application/json",
-			success : function (rs) {
-				$("#" + rolesDiv + "").append("<label class='middle'>");
-				$.each(rs, function(i, value) {
-					$("#" + rolesDiv + "").append("<input name='"+ roleName + "' value='" + 
-							value.roleId +"' type='checkbox'>" + value.roleName + "&nbsp;&nbsp;");
-				});
-				$("#" + rolesDiv + "").append("</label>");
-			},
-			error : function (data) {
-				layer.alert(data.responseText, {icon: 0});
-			}
-		});
-	}
+
 
 	function initTable(pageSize){
 		$("#datatable").DataTable({
@@ -386,7 +368,7 @@ function insertUser() {
 				searchVo.keyWord = data.search.value;
 				
 				$.ajax({
-					url : "/account/users",
+					url : "/api/users",
 					type : "post",
 					contentType : "application/json",
 					data : JSON.stringify(searchVo),//把包装好的searchVo对象转化成json字符串
