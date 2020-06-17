@@ -29,6 +29,7 @@ public class User {
 	private int userId;
 	private String userName;
 	private String password;
+	private String userImg;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date createDate;
 	
@@ -80,5 +81,15 @@ public class User {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+
+	public String getUserImg() {
+		return userImg;
+	}
+
+	public void setUserImg(String userImg) {
+		this.userImg = userImg;
+	}
+	
+	
 
 }

@@ -58,8 +58,11 @@ public interface UserDao {
 	User getUserByUserId(int userId);
 	
 	//修改
-	@Update("update user set user_name = #{userName} where user_id = #{userId}")
+	@Update("update user set user_name = #{userName},user_img = #{userImg} where user_id = #{userId}")
 	void updateUser(User user);
+	
+//	@Update("update user set user_name = #{userName}, user_img = #{userImg} where user_id = #{userId}")
+//	void updateUser(User user);
 	
 	//删除
 	@Delete("delete from user where user_id = #{userId}")
