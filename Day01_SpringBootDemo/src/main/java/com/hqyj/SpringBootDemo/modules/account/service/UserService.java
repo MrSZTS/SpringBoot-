@@ -29,4 +29,6 @@ public interface UserService {
 	
 	Result<User> updateUserProfile(User user);
 	
+	void logout();
+	
 }
