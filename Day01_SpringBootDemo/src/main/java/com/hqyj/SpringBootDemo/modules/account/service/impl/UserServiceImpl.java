@@ -3,6 +3,7 @@ package com.hqyj.SpringBootDemo.modules.account.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.apache.shiro.subject.Subject;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,9 +91,13 @@ public class UserServiceImpl implements UserService{
 					new UsernamePasswordToken(user.getUserName(),MD5Util.getMD5(user.getPassword()));
 			usernamePasswordToken.setRememberMe(user.getRememberMe());
 			
-			//调用login将令牌传入到MyRealm中的身份验证
+			//调用login将令牌传入到MyRealm中的身份验证 
 			subject.login(usernamePasswordToken);
 			subject.checkRoles();
+			
+			Session session = subject.getSession();	
+			User userTemp = (User) subject.getPrincipal();
+			session.setAttribute("userId", userTemp.getUserId());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,8 +153,12 @@ public class UserServiceImpl implements UserService{
 			return new Result<User>(ResultStatus.FAILED.status,"User name is repeat");
 		}
 		
+		user.setPassword(MD5Util.getMD5(user.getPassword()));
+		user.setCreateDate(new Date()); 
+		
+		//管理员编辑用户时，只修改用户角色
 		if(user.getUserId() > 0) {
-			userDao.updateUser(user);
+			//userDao.updateUser(user);
 			userRoleDao.deleteRolesByUserId(user.getUserId());
 		}else {
 			userDao.insertUser(user);

@@ -1,5 +1,6 @@
 package com.hqyj.SpringBootDemo.modules.account.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 //数据库生成的表名
 @Table(name="user")
-public class User {
+public class User implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//@Id	@GeneratedValue 为一个实体生成一个唯一标识的主键
