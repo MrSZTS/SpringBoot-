@@ -2,6 +2,7 @@ package com.hqyj.account.modules.account.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -25,6 +26,8 @@ public class User implements Serializable{
 	private String accountName;
 	//@Transient	就是在给某个javabean上需要添加个属性，但是这个属性你又不希望给存到数据库中去，仅仅是做个临时变量，用一下。
 	private boolean rememberMe;
+	
+	List<City> cities;
 
 	public int getUserId() {
 		return userId;
@@ -76,6 +79,14 @@ public class User implements Serializable{
 
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
+	}
+
+	public List<City> getCities() {
+		return cities;
+	}
+
+	public void setCities(List<City> cities) {
+		this.cities = cities;
 	}
 	
 	
