@@ -89,6 +89,8 @@ public class UserServiceImpl implements UserService{
 			//包装令牌
 			UsernamePasswordToken usernamePasswordToken = 
 					new UsernamePasswordToken(user.getUserName(),MD5Util.getMD5(user.getPassword()));
+//			UsernamePasswordToken usernamePasswordToken = 
+//					new UsernamePasswordToken(user.getAccountName(),MD5Util.getMD5(user.getPassword()));
 			usernamePasswordToken.setRememberMe(user.getRememberMe());
 			
 			//调用login将令牌传入到MyRealm中的身份验证 

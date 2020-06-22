@@ -37,6 +37,8 @@ public class User implements Serializable{
 	private Date createDate;
 	
 	@Transient
+	private String accountName;
+	@Transient
 	//@Transient	就是在给某个javabean上需要添加个属性，但是这个属性你又不希望给存到数据库中去，仅仅是做个临时变量，用一下。
 	private boolean rememberMe;
 	@Transient
@@ -92,6 +94,15 @@ public class User implements Serializable{
 	public void setUserImg(String userImg) {
 		this.userImg = userImg;
 	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+	
 	
 	
 

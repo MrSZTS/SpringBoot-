@@ -3,10 +3,13 @@ package com.hqyj.SpringBootDemo.config.shiro;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.Filter;
+
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.crypto.AesCipherService;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -65,6 +68,16 @@ public class ShiroConfig {
 		//没有权限默认跳转的页面，登录的用户访问了没有被授权的资源自动跳转到的页面。
 		//shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
 		
+		//使用非userName进行登录，shiro获取登录名
+		//如果登录名属性不使用默认的userName，则需要添加过滤器设置登录名属性
+		//Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+		//FormAuthenticationFilter formAuthenticationFilter = new FormAuthenticationFilter();
+		//设置传过来的userName的参数，默认使用的是userName字符串，现在改为accountName
+		//formAuthenticationFilter.setUsernameParam("accountName");
+		//filters.put("authc", formAuthenticationFilter);
+		//shiroFilterFactoryBean.setFilters(filters);
+		
+		//包装url的匹配规则
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("/static/**", "anon");
 		map.put("/build/**", "anon");
