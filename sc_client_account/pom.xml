@@ -35,6 +35,14 @@
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
 		
+		<!-- feign -->
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-feign</artifactId>
+		    <version>1.4.7.RELEASE</version>
+		</dependency>
+		
+		
 		<!-- spring web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
