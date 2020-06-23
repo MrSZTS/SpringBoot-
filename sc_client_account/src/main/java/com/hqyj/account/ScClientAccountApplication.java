@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 /*
  * @EnableDiscoveryClient		适用于spring boot支持的所有注册中心
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableDiscoveryClient//适用于spring boot支持的所有注册中心
+@EnableHystrix//在消费者服务中添加容错保护
 public class ScClientAccountApplication {
 
 	public static void main(String[] args) {
