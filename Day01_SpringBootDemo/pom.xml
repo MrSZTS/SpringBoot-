@@ -37,6 +37,7 @@
 		    <artifactId>spring-boot-starter-tomcat</artifactId>
 		    <scope>provided</scope>
 		</dependency> -->
+		<!-- 指定他的范围只在编译和测试的时候有用 -->
 		
 		<!-- spring dev tools -->
 		<dependency>
